@@ -1,4 +1,5 @@
 #![warn(missing_docs, missing_doc_code_examples)]
+#![allow(incomplete_features)]
 #![feature(generic_const_exprs, const_trait_impl)]
 
 //! A library for creating Swarm Intelligence AI Networks
