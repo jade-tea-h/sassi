@@ -1,6 +1,6 @@
 # Sassi
 
-Sassi (Simple Agent Simulated Swarm Intelligence) contains utilities for creating [Swarm Intelligence (SI)] (https://en.wikipedia.org/wiki/Swarm_intelligence#) models.
+Sassi (Simple Agent Simulated Swarm Intelligence) contains utilities for creating [Swarm Intelligence (SI)](https://en.wikipedia.org/wiki/Swarm_intelligence#) models.
 The idea is to facilitate using one or a small handful of relatively simple Artificial Intelligence algorithms for large numbers of interacting agents to facilitate emergent behavior similar to that of eusociality seen in nature where individuals in the social group have relatively simple decision-making behavior.
 
 <!-- TODO: add link to documentation -->
