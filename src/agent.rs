@@ -1,20 +1,43 @@
 /// This trait provides an interface for the SwarmManager to use.
-/// N is the size of the state array returned by the agent.
-pub trait SwarmAgent: Default {
+pub trait SwarmAgent {
+    /// Size of the state array returned as input for the decision model used by
+    /// [SwarmManager].
     const STATE_SIZE: usize;
-    /// Decisions made in a format usable by the agent
+
+    /// Decisions made in a format usable by the agent.
+    ///
+    /// Should probably be a tuple of primitives and enums.
+    /// Most likely will be somehow restricted somehow in the future.
     type Input;
 
-    /// Contains parameters required to construct a new SwarmAgent
+    /// Contains parameters required to construct a new `SwarmAgent`.
     type SpawnArgs;
 
-    /// Return an array of floats representing the state
+    /// Return an array of floats representing the state.
     fn get_state(&self) -> [f32; Self::STATE_SIZE];
-    /// Act based on recieved input
+
+    /// Act based on recieved input.
     // TODO: allow returning some kind of cost evaluation?
     fn evaluate(&mut self, input: Self::Input);
 
-    fn spawn_new(args: &Self::SpawnArgs) -> Self;
+    /// Construct new generic `SwarmAgent`
+    fn spawn() -> Self
+    where
+        Self: Default,
+    {
+        Self::default()
+    }
+    // fn spawn() -> Self
+    // where
+    //     // Self: ?Default,
+    //     Self: Sized,
+    //     Self::SpawnArgs: Default,
+    // {
+    //     Self::spawn_with(&Self::SpawnArgs::default())
+    // }
+
+    /// Construct new `SwarmAgent` using [Self::SpawnArgs].
+    fn spawn_with(args: &Self::SpawnArgs) -> Self;
 }
 
 #[cfg(test)]
@@ -56,7 +79,7 @@ mod test {
         fn evaluate(&mut self, input: Self::Input) {
             self.state = input;
         }
-        fn spawn_new(_args: &Self::SpawnArgs) -> Self {
+        fn spawn_with(_args: &Self::SpawnArgs) -> Self {
             Self::default()
         }
     }
@@ -71,6 +94,5 @@ mod test {
         let i = (1.0, 1.0, Discrete::On);
         a.evaluate(i.clone());
         assert_eq!(a.state, i);
-        // assert_eq!(a.get_state(), [i.0, i.1, i.2.into()]);
     }
 }

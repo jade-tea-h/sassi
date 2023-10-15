@@ -9,7 +9,7 @@ pub struct SwarmManager<A: SwarmAgent> {
 impl<A: SwarmAgent> SwarmManager<A> {
     /// New empty SwarmManager
     pub fn new() -> Self {
-        Self { agents: vec![] }
+        Self { agents: Vec::new() }
     }
 
     /// Constructs a new [SwarmAgent] using [SwarmAgent::spawn_new]
@@ -28,7 +28,7 @@ impl<A: SwarmAgent> SwarmManager<A> {
     ///     // ...
     ///     # const STATE_SIZE: usize = 0;
     ///     # type Input = [u8;0];
-    ///     fn spawn_new(args: &Self::SpawnArgs) -> Self { MyAgent(args.clone()) }
+    ///     fn spawn_with(args: &Self::SpawnArgs) -> Self { MyAgent(args.clone()) }
     ///     # fn get_state(&self) -> [f32;0] { [] }
     ///     # fn evaluate(&mut self, input: Self::Input) {}
     /// }
@@ -38,11 +38,12 @@ impl<A: SwarmAgent> SwarmManager<A> {
     /// assert_eq!(arg, manager.agent(id).unwrap().0);
     /// ```
     pub fn spawn_agent(&mut self, args: &A::SpawnArgs) -> usize {
-        let new = A::spawn_new(args);
+        let new = A::spawn_with(args);
         self.agents.push(new);
         self.agents.len() - 1
     }
 
+    /// Get agent
     pub fn agent(&self, id: usize) -> Option<&A> {
         self.agents.get(id)
     }

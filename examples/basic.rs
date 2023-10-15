@@ -13,7 +13,7 @@ impl SwarmAgent for MyAgent {
     const STATE_SIZE: usize = 5;
     type Input = [AgentInput; 2];
     type SpawnArgs = Vec<f32>;
-    fn spawn_new(args: &Self::SpawnArgs) -> Self {
+    fn spawn_with(args: &Self::SpawnArgs) -> Self {
         MyAgent { data: args.clone() }
     }
     fn get_state(&self) -> [f32; Self::STATE_SIZE] {
