@@ -1,4 +1,4 @@
-use sassi::{SwarmAgent, SwarmManager};
+use sassi::{Agent, SwarmManager};
 
 #[derive(Debug, PartialEq, Clone)]
 enum AgentInput {
@@ -9,7 +9,7 @@ enum AgentInput {
 struct MyAgent {
     data: Vec<f32>,
 }
-impl SwarmAgent for MyAgent {
+impl Agent for MyAgent {
     const STATE_SIZE: usize = 5;
     type Input = [AgentInput; 2];
     type SpawnArgs = Vec<f32>;

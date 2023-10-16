@@ -9,7 +9,7 @@ The library is very much a work in progress. Pull requests are welcome!
 
 ## Usage
 
-### SwarmAgent Trait
+### Agent Trait
 
 ### SwarmManager Struct
 

@@ -1,7 +1,7 @@
-/// This trait provides an interface for the SwarmManager to use.
-pub trait SwarmAgent {
-    /// Size of the state array returned as input for the decision model used by
-    /// [SwarmManager].
+/// An `Agent` is a single acting agent in a swarm.
+/// The
+pub trait Agent {
+    /// Size of the state array returned as input for the decision model used by [SwarmManager].
     const STATE_SIZE: usize;
 
     /// Decisions made in a format usable by the agent.
@@ -10,7 +10,7 @@ pub trait SwarmAgent {
     /// Most likely will be somehow restricted somehow in the future.
     type Input;
 
-    /// Contains parameters required to construct a new `SwarmAgent`.
+    /// Contains parameters required to construct a new `Agent`.
     type SpawnArgs;
 
     /// Return an array of floats representing the state.
@@ -20,7 +20,7 @@ pub trait SwarmAgent {
     // TODO: allow returning some kind of cost evaluation?
     fn evaluate(&mut self, input: Self::Input);
 
-    /// Construct new generic `SwarmAgent`
+    /// Construct new generic `Agent`
     fn spawn() -> Self
     where
         Self: Default,
@@ -36,7 +36,7 @@ pub trait SwarmAgent {
     //     Self::spawn_with(&Self::SpawnArgs::default())
     // }
 
-    /// Construct new `SwarmAgent` using [Self::SpawnArgs].
+    /// Construct new `Agent` using [Self::SpawnArgs].
     fn spawn_with(args: &Self::SpawnArgs) -> Self;
 }
 
@@ -69,7 +69,7 @@ mod test {
     struct TestAgent {
         state: (f32, f32, Discrete),
     }
-    impl SwarmAgent for TestAgent {
+    impl Agent for TestAgent {
         const STATE_SIZE: usize = 3;
         type Input = (f32, f32, Discrete);
         type SpawnArgs = ();

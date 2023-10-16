@@ -1,29 +1,29 @@
-use super::agent::SwarmAgent;
+use super::agent::Agent;
 
 /// The struct used to spawn and control agents.
 /// This is where all of the functionality of the crate is.
-pub struct SwarmManager<A: SwarmAgent> {
+pub struct SwarmManager<A: Agent> {
     agents: Vec<A>,
 }
 
-impl<A: SwarmAgent> SwarmManager<A> {
+impl<A: Agent> SwarmManager<A> {
     /// New empty SwarmManager
     pub fn new() -> Self {
         Self { agents: Vec::new() }
     }
 
-    /// Constructs a new [SwarmAgent] using [SwarmAgent::spawn_new]
-    /// Args is defined by the user in their implementation of SwarmAgent
+    /// Constructs a new [Agent] using [Agent::spawn_with]
+    /// Args is defined by the user in their implementation of [Agent]
     ///
     /// # Examples
     ///
     /// ```
-    /// # use sassi::{SwarmAgent,SwarmManager};
+    /// # use sassi::{Agent,SwarmManager};
     /// # #[derive(Debug, Default)]
     /// struct MyAgent(ArgStruct);
     /// # #[derive(Debug, PartialEq, Clone, Default)]
     /// struct ArgStruct(u8, u8);
-    /// impl SwarmAgent for MyAgent {
+    /// impl Agent for MyAgent {
     ///     type SpawnArgs = ArgStruct;
     ///     // ...
     ///     # const STATE_SIZE: usize = 0;
@@ -49,7 +49,7 @@ impl<A: SwarmAgent> SwarmManager<A> {
     }
 }
 
-impl<A: SwarmAgent> Default for SwarmManager<A> {
+impl<A: Agent> Default for SwarmManager<A> {
     fn default() -> Self {
         Self::new()
     }
