@@ -1,15 +1,36 @@
 use super::agent::Agent;
 
 /// The struct used to spawn and control agents.
-/// This is where all of the functionality of the crate is.
+/// In most applications, this will be the main, and possibly only, interface to the library.
 pub struct SwarmManager<A: Agent> {
     agents: Vec<A>,
 }
 
 impl<A: Agent> SwarmManager<A> {
-    /// New empty SwarmManager
+    /// Constructs a new, empty `SwarmManager`.
+    ///
+    /// # Examples
+    /// ```
+    /// use sassi::{SwarmManager};
+    /// # use sassi::MyAgent;
+    /// let mut manager: SwarmManager<MyAgent> = SwarmManager::new();
+    /// ```
     pub fn new() -> Self {
         Self { agents: Vec::new() }
+    }
+
+    /// Constructs a new, empty `SwarmManager` with a given capacity.
+    ///
+    /// The constructed `SwarmManager` will hold at least `capacity` items before reallocation occurs.
+    pub fn with_capacity(capacity: usize) -> Self {
+        Self { agents: Vec::with_capacity(capacity) }
+    }
+
+    /// Constructs a new `SwarmManager` containing the given collection of elements.
+    ///
+    /// The collection is consumed and the `SwarmManager` takes ownership of the elements within it.
+    pub fn from(agents: impl Into<Vec<A>>) -> Self {
+        Self { agents: agents.into() }
     }
 
     /// Constructs a new [Agent] using [Agent::spawn_with]
@@ -46,6 +67,13 @@ impl<A: Agent> SwarmManager<A> {
     /// Get agent
     pub fn agent(&self, id: usize) -> Option<&A> {
         self.agents.get(id)
+    }
+
+    /// Gives control of an agent constructed elsewhere to the Manager.
+    ///
+    /// Consumes the given agent.
+    pub fn add_agent(&mut self, agent: A) {
+        self.agents.push(agent);
     }
 }
 
